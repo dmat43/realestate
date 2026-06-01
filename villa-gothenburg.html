@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dream Villa – Gothenburg, Sweden</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e8;
+      --sand: #e8dece;
+      --charcoal: #1e1e1e;
+      --stone: #4a4540;
+      --muted: #8a8278;
+      --gold: #b8975a;
+      --gold-light: #d4b078;
+      --white: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 48px;
+      background: rgba(245, 240, 232, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(184, 151, 90, 0.2);
+      transition: all 0.3s ease;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--stone);
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .nav-links a:hover { opacity: 1; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-end;
+      padding: 0 48px 80px;
+      position: relative;
+      overflow: hidden;
+      background: var(--charcoal);
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: 
+        linear-gradient(to bottom, rgba(30,30,30,0.3) 0%, rgba(30,30,30,0.7) 100%),
+        url('https://i.ibb.co/jvHthNXz/herohd.png') center/cover no-repeat;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 720px;
+    }
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 20px;
+      font-weight: 400;
+    }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--white);
+      margin-bottom: 24px;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+    .hero p {
+      font-size: 1rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.75);
+      max-width: 520px;
+      margin-bottom: 36px;
+      line-height: 1.7;
+    }
+    .hero p strong { color: var(--gold-light); font-weight: 500; }
+    .btn-row { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary {
+      padding: 14px 32px;
+      background: var(--gold);
+      color: var(--white);
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.25s;
+      font-weight: 500;
+    }
+    .btn-primary:hover { background: var(--gold-light); }
+    .btn-outline {
+      padding: 13px 32px;
+      background: transparent;
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.45);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: border-color 0.25s, color 0.25s;
+      font-weight: 400;
+    }
+    .btn-outline:hover { border-color: var(--gold-light); color: var(--gold-light); }
+    .btn-outline svg { width: 14px; height: 14px; }
+
+    /* SCROLL INDICATOR */
+    .scroll-hint {
+      position: absolute;
+      bottom: 32px;
+      right: 48px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: rgba(255,255,255,0.4);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .scroll-line {
+      width: 40px;
+      height: 1px;
+      background: rgba(255,255,255,0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    .scroll-line::after {
+      content: '';
+      position: absolute;
+      left: -100%; top: 0;
+      width: 100%; height: 100%;
+      background: var(--gold-light);
+      animation: scrollAnim 2s ease-in-out infinite;
+    }
+    @keyframes scrollAnim {
+      0% { left: -100%; } 100% { left: 100%; }
+    }
+
+    /* SECTIONS */
+    section { padding: 96px 48px; }
+    .section-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 500;
+      margin-bottom: 14px;
+      display: block;
+    }
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.2;
+      color: var(--charcoal);
+      margin-bottom: 20px;
+    }
+    .lead {
+      font-size: 1rem;
+      color: var(--stone);
+      max-width: 620px;
+      font-weight: 300;
+      line-height: 1.75;
+      margin-bottom: 48px;
+    }
+
+    /* WHY GOTHENBURG */
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2px;
+      margin-top: 48px;
+    }
+    .why-card {
+      background: var(--white);
+      padding: 36px 32px;
+      border-left: 3px solid transparent;
+      transition: border-color 0.25s;
+    }
+    .why-card:hover { border-left-color: var(--gold); }
+    .why-card .icon { font-size: 1.6rem; margin-bottom: 14px; }
+    .why-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      margin-bottom: 10px;
+      color: var(--charcoal);
+    }
+    .why-card p { font-size: 0.88rem; color: var(--stone); font-weight: 300; line-height: 1.65; }
+
+    /* PROPERTY */
+    .property-section { background: var(--white); }
+    .property-inner {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 64px;
+      align-items: start;
+      max-width: 1100px;
+    }
+    .property-features {
+      list-style: none;
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .property-features li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.9rem;
+      color: var(--stone);
+      font-weight: 300;
+    }
+    .property-features li::before {
+      content: '';
+      width: 20px;
+      height: 1px;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+    .quick-facts {
+      background: var(--charcoal);
+      color: var(--white);
+      padding: 40px 36px;
+    }
+    .quick-facts h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 300;
+      margin-bottom: 28px;
+      color: var(--gold-light);
+      letter-spacing: 0.05em;
+    }
+    .fact-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      font-size: 0.85rem;
+    }
+    .fact-row:last-child { border-bottom: none; }
+    .fact-label { color: rgba(255,255,255,0.5); font-weight: 300; }
+    .fact-val { font-weight: 500; color: var(--white); }
+
+    /* GALLERY */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: 200px 200px;
+      gap: 3px;
+      margin-top: 48px;
+    }
+    .gallery-item {
+      overflow: hidden;
+      position: relative;
+    }
+    .gallery-item:first-child {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.04); }
+
+    /* LAYOUT */
+    .layout-section { background: var(--sand); }
+    .layout-photos {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+      margin-top: 48px;
+    }
+    .layout-photos img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+    }
+
+    /* LISEBERG */
+    .liseberg-section {
+      background: var(--charcoal);
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+    .liseberg-section::before {
+      content: 'LISEBERG';
+      position: absolute;
+      right: -20px;
+      top: 50%;
+      transform: translateY(-50%) rotate(90deg);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 10rem;
+      font-weight: 300;
+      opacity: 0.04;
+      letter-spacing: 0.1em;
+      pointer-events: none;
+    }
+    .liseberg-section .section-tag { color: var(--gold-light); }
+    .liseberg-section h2 { color: var(--white); }
+    .liseberg-section .lead { color: rgba(255,255,255,0.6); }
+    .liseberg-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.08);
+      margin-top: 48px;
+    }
+    .liseberg-card {
+      background: var(--charcoal);
+      padding: 36px 28px;
+      border-top: 2px solid transparent;
+      transition: border-color 0.25s;
+    }
+    .liseberg-card:hover { border-top-color: var(--gold); }
+    .liseberg-card .icon { font-size: 1.8rem; margin-bottom: 16px; }
+    .liseberg-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+    .liseberg-card p { font-size: 0.85rem; color: rgba(255,255,255,0.5); font-weight: 300; line-height: 1.65; }
+
+    /* ATTRACTIONS */
+    .attractions-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .attraction-card { text-align: left; }
+    .attraction-card img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      margin-bottom: 14px;
+    }
+    .attraction-card h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      margin-bottom: 6px;
+      color: var(--charcoal);
+    }
+    .attraction-card p { font-size: 0.82rem; color: var(--muted); font-weight: 300; line-height: 1.6; }
+
+    /* COASTAL */
+    .coastal-section { background: var(--white); }
+    .coastal-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 48px;
+    }
+    .coastal-card {
+      padding: 32px 28px;
+      background: var(--cream);
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.25s;
+    }
+    .coastal-card:hover { border-bottom-color: var(--gold); }
+    .coastal-card .icon { font-size: 1.4rem; margin-bottom: 14px; }
+    .coastal-card h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+    .coastal-card p { font-size: 0.85rem; color: var(--stone); font-weight: 300; }
+
+    /* DINING */
+    .dining-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-top: 48px;
+    }
+    .dining-col h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 400;
+      margin-bottom: 20px;
+      color: var(--charcoal);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .dining-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .dining-col li {
+      font-size: 0.88rem;
+      color: var(--stone);
+      font-weight: 300;
+      padding-left: 16px;
+      border-left: 1px solid var(--gold);
+      line-height: 1.5;
+    }
+
+    /* STATS CTA */
+    .cta-section {
+      background: var(--charcoal);
+      color: var(--white);
+      text-align: center;
+      padding: 96px 48px;
+    }
+    .cta-section .section-tag { color: var(--gold-light); }
+    .cta-section h2 { color: var(--white); margin-bottom: 12px; }
+    .cta-section .lead { color: rgba(255,255,255,0.6); margin: 0 auto 56px; text-align: center; }
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 56px;
+      flex-wrap: wrap;
+    }
+    .stat {
+      padding: 32px 56px;
+      border-right: 1px solid rgba(255,255,255,0.1);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      font-weight: 300;
+      color: var(--gold-light);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-label { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); font-weight: 300; }
+    .cta-buttons { display: flex; justify-content: center; gap: 16px; }
+    .btn-cta {
+      padding: 15px 40px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-weight: 500;
+      border: none;
+      transition: 0.25s;
+    }
+    .btn-cta-primary { background: var(--gold); color: var(--white); }
+    .btn-cta-primary:hover { background: var(--gold-light); }
+    .btn-cta-outline {
+      background: transparent;
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+    .btn-cta-outline:hover { border-color: var(--gold-light); color: var(--gold-light); }
+
+    /* FOOTER */
+    footer {
+      background: #141414;
+      color: rgba(255,255,255,0.35);
+      padding: 36px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      font-weight: 300;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--cream);
+      padding: 48px;
+      max-width: 480px;
+      width: 90%;
+      position: relative;
+    }
+    .modal h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 300;
+      margin-bottom: 6px;
+    }
+    .modal p { font-size: 0.88rem; color: var(--stone); margin-bottom: 28px; font-weight: 300; }
+    .modal input, .modal select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--sand);
+      background: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      margin-bottom: 14px;
+      outline: none;
+      color: var(--charcoal);
+    }
+    .modal input:focus, .modal select:focus { border-color: var(--gold); }
+    .modal-close {
+      position: absolute;
+      top: 16px; right: 20px;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: var(--muted);
+      line-height: 1;
+    }
+    .modal-close:hover { color: var(--charcoal); }
+
+    /* FADE IN */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      section { padding: 64px 20px; }
+      .hero { padding: 0 20px 64px; }
+      .property-inner { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .gallery-item:first-child { grid-column: span 2; grid-row: span 1; }
+      .layout-photos { grid-template-columns: 1fr; }
+      .liseberg-grid { grid-template-columns: 1fr; }
+      .attractions-grid { grid-template-columns: 1fr 1fr; }
+      .coastal-cards { grid-template-columns: 1fr; }
+      .dining-inner { grid-template-columns: 1fr; }
+      .stats-row { gap: 0; }
+      .stat { padding: 24px 28px; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">Villa Gothenburg</span>
+  <ul class="nav-links">
+    <li><a href="#property">The Property</a></li>
+    <li><a href="#location">Location</a></li>
+    <li><a href="#lifestyle">Lifestyle</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content fade-in">
+    <span class="hero-tag">Gothenburg, Sweden &nbsp;·&nbsp; Exclusive Listing</span>
+    <h1>Your Dream <em>Villa</em><br>in Gothenburg</h1>
+    <p>A rare opportunity to own a fully furnished luxury villa with private pool — just <strong>3 km from Liseberg</strong>, one of Europe's most beloved amusement parks. Priced at <strong>€950,000</strong>, with flexible financing available over 30 years.</p>
+    <div class="btn-row">
+      <button class="btn-primary" onclick="openModal()">Schedule a Viewing</button>
+      <a class="btn-outline" href="https://drive.google.com/file/d/16YYIEw0UVcBUQXWJWq5w4OK4bgkkBatK/preview" download id="brochureBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17"/></svg>
+        Download Brochure
+      </a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    Scroll to explore
+  </div>
+</section>
+
+<!-- WHY GOTHENBURG -->
+<section id="location">
+  <span class="section-tag">Why Gothenburg?</span>
+  <h2>Live in one of Europe's<br>Best places to call your home</h2>
+  <p class="lead">Gothenburg is consistently ranked among the world's most livable cities — clean, safe, and family-friendly, with outstanding schools, healthcare, and a thriving cultural scene. Sweden's west coast gem offers a perfect balance of urban energy and natural beauty.</p>
+  <div class="why-grid">
+    <div class="why-card fade-in">
+      <div class="icon">🛡️</div>
+      <h3>Safe &amp; Stable</h3>
+      <p>Sweden ranks among the safest countries globally, with low crime rates and a strong social infrastructure that supports a high quality of life.</p>
+    </div>
+    <div class="why-card fade-in">
+      <div class="icon">🌿</div>
+      <h3>Nature &amp; City</h3>
+      <p>Archipelago, forests, and parks surround you — yet downtown Gothenburg is only minutes away by car or public transport.</p>
+    </div>
+    <div class="why-card fade-in">
+      <div class="icon">👨‍👩‍👧</div>
+      <h3>Family-First</h3>
+      <p>World-class schools, childcare, and family benefits make Gothenburg an ideal place to raise children in comfort and safety.</p>
+    </div>
+  </div>
+</section>
+
+<!-- THE PROPERTY -->
+<section id="property" class="property-section">
+  <span class="section-tag">The Property</span>
+  <h2>A Fully Equipped Luxury Villa<br>— Move In Ready</h2>
+  <div class="property-inner fade-in">
+    <div>
+      <p class="lead" style="margin-bottom:28px;">This stunning villa comes <strong>completely furnished</strong> with high-end designer furniture, modern appliances, and a <strong>private outdoor swimming pool</strong>. Every detail has been thoughtfully designed for comfort, elegance, and modern living.</p>
+      <ul class="property-features">
+        <li>Spacious open-plan living and dining area</li>
+        <li>Modern fully-equipped kitchen with premium appliances</li>
+        <li>Multiple bedrooms with built-in wardrobes</li>
+        <li>Luxury bathrooms with underfloor heating</li>
+        <li>Private garden with heated swimming pool</li>
+        <li>Garage and ample parking space</li>
+      </ul>
+    </div>
+    <div class="quick-facts">
+      <h4>Quick Facts</h4>
+      <div class="fact-row">
+        <span class="fact-label">Price</span>
+        <span class="fact-val">€950,000</span>
+      </div>
+      <div class="fact-row">
+        <span class="fact-label">Financing</span>
+        <span class="fact-val">30 years</span>
+      </div>
+      <div class="fact-row">
+        <span class="fact-label">Annual Payment</span>
+        <span class="fact-val">~€32,000/yr</span>
+      </div>
+      <div class="fact-row">
+        <span class="fact-label">Furnished</span>
+        <span class="fact-val">Fully included</span>
+      </div>
+      <div class="fact-row">
+        <span class="fact-label">Pool</span>
+        <span class="fact-val">Private, heated</span>
+      </div>
+      <div class="fact-row">
+        <span class="fact-label">Status</span>
+        <span class="fact-val">Move-in ready</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section style="padding: 0; background: var(--white);">
+  <span class="section-tag" style="padding: 64px 48px 0; display:block;">Interior Tour</span>
+  <h2 style="padding: 0 48px 16px;">Step Inside Your Future Home</h2>
+  <p class="lead" style="padding: 0 48px 48px;">Every room has been designed with natural light, premium materials, and a sense of calm.</p>
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <img src="https://i.ibb.co/DfsZ4cwT/interiorhd.png" alt="Living room" />
+    </div>
+    <div class="gallery-item">
+      <img src="https://i.ibb.co/sdntNFTJ/interior4.jpg" alt="Kitchen" />
+    </div>
+    <div class="gallery-item">
+      <img src="https://i.ibb.co/0jf4RQMW/interior1.jpg" alt="Bedroom" />
+    </div>
+    <div class="gallery-item">
+      <img src="https://i.ibb.co/nqfwpyPn/interior3.jpg" alt="Bathroom" />
+    </div>
+    <div class="gallery-item">
+      <img src="https://i.ibb.co/Jj4Rymc7/pool.jpg" alt="Pool area" />
+    </div>
+  </div>
+</section>
+
+<!-- LAYOUT -->
+<section class="layout-section fade-in">
+  <span class="section-tag">Floor Plan</span>
+  <h2>Thoughtfully Designed Layout</h2>
+  <p class="lead">The villa's floor plan maximises space, light, and flow — with generous room sizes, smart storage, and seamless indoor-outdoor connections.</p>
+</section>
+
+<!-- LISEBERG -->
+<section class="liseberg-section">
+  <span class="section-tag">Just 3 km Away</span>
+  <h2>Liseberg – Europe's Most Beloved<br>Amusement Park at Your Doorstep</h2>
+  <p class="lead">Liseberg, one of Scandinavia's largest and most iconic amusement parks, is located just 3 km from the villa. Open seasonally with thrilling rides, beautiful gardens, and magical Christmas markets.</p>
+  <div class="liseberg-grid">
+    <div class="liseberg-card fade-in">
+      <div class="icon", onclick="openModal2()">🎢</div>
+      <h3>Thrilling Rides</h3>
+      <p>Over 30 attractions including roller coasters, water rides, and family-friendly experiences for all ages.</p>
+    </div>
+    <div class="liseberg-card fade-in">
+      <div class="icon", onclick="openModal3()">🎄</div>
+      <h3>Christmas Market</h3>
+      <p>Liseberg's Christmas market is one of Europe's most magical seasonal destinations — right around the corner.</p>
+    </div>
+    <div class="liseberg-card fade-in">
+      <div class="icon", onclick="openModal4()">🌸</div>
+      <h3>Beautiful Gardens</h3>
+      <p>Lush green spaces and floral displays make it a year-round destination for the whole family.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TOURIST ATTRACTIONS -->
+<section id="lifestyle" class="fade-in">
+  <span class="section-tag">Explore Gothenburg</span>
+  <h2>Tourist Attractions</h2>
+  <p class="lead">Gothenburg offers an incredible variety of cultural and natural attractions — all easily accessible from your new home.</p>
+  <div class="attractions-grid">
+    <div class="attraction-card">
+      <img src="https://images.unsplash.com/photo-1567095761054-7a02e69e5c43?w=400&q=80" alt="Archipelago" />
+      <h4>The Archipelago</h4>
+      <p>Explore over 5,000 islands by boat — pristine nature, fishing villages, and sea views.</p>
+    </div>
+    <div class="attraction-card">
+      <img src="https://www.stromma.com/globalassets/sweden/gothenburg/sights/universeum/universeum_1.jpg" alt="Universeum" />
+      <h4>Universeum</h4>
+      <p>Scandinavia's largest science center with aquarium, rainforest, and interactive exhibits.</p>
+    </div>
+    <div class="attraction-card">
+      <img src="https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=400&q=80" alt="Haga District" />
+      <h4>Haga District</h4>
+      <p>Historic cobblestone streets, charming cafés, and the famous giant cinnamon buns.</p>
+    </div>
+    <div class="attraction-card">
+      <img src="https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=400&q=80" alt="Museum of Art" />
+      <h4>Museum of Art</h4>
+      <p>World-class Nordic and international art collections in a stunning building.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BEACHES -->
+<section class="coastal-section fade-in">
+  <span class="section-tag">Sun, Sand &amp; Sea</span>
+  <h2>Beaches &amp; Outdoor Living</h2>
+  <p class="lead">Sweden's west coast offers stunning beaches, rocky shores, and crystal-clear waters — perfect for summer swimming, sailing, and coastal walks.</p>
+  <div class="coastal-cards">
+    <div class="coastal-card">
+      <div class="icon">🏖️</div>
+      <h4>Saltholmen Beach</h4>
+      <p>A popular family beach with sandy shores, calm waters, and ferry connections to the archipelago.</p>
+    </div>
+    <div class="coastal-card">
+      <div class="icon">⛵</div>
+      <h4>Archipelago Sailing</h4>
+      <p>Rent a boat or join a sailing tour — the Gothenburg archipelago is a sailor's paradise.</p>
+    </div>
+    <div class="coastal-card">
+      <div class="icon">🚶</div>
+      <h4>Coastal Walking Trails</h4>
+      <p>Scenic trails along the coastline offer breathtaking views and fresh sea air year-round.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DINING -->
+<section class="fade-in">
+  <span class="section-tag">Lifestyle &amp; Entertainment</span>
+  <h2>Where to Eat, Drink &amp; Have Fun</h2>
+  <p class="lead">Gothenburg has a vibrant food and nightlife scene — from Michelin-starred restaurants to cozy pubs and live music venues.</p>
+  <div class="dining-inner">
+    <div class="dining-col">
+      <h4>🍽 Dining</h4>
+      <ul>
+        <li>Feskekôrka — iconic fish market</li>
+        <li>Magasinsgatan — trendy food street</li>
+        <li>Avalon, Kock &amp; Vin — fine dining</li>
+        <li>Haga cafés — famous cinnamon buns</li>
+      </ul>
+    </div>
+    <div class="dining-col">
+      <h4>🎭 Entertainment</h4>
+      <ul>
+        <li>Gothenburg Opera — world-class performances</li>
+        <li>Live music at Sticky Fingers &amp; Nefertiti</li>
+        <li>Shopping at Nordstan &amp; Avenyn</li>
+        <li>Slottsskogen Park — outdoor concerts &amp; zoo</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / STATS -->
+<section id="contact" class="cta-section">
+  <span class="section-tag">Make It Yours</span>
+  <h2>Your New Life Starts Here — €950,000</h2>
+  <p class="lead">This is more than a home — it's a lifestyle. With flexible financing of ~€32,000/year over 30 years, owning this villa is within reach. The property includes all furniture, appliances, and the private pool.</p>
+  <div class="stats-row">
+    <div class="stat">
+      <div class="stat-number">€950K</div>
+      <div class="stat-label">Total Price</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">30</div>
+      <div class="stat-label">Year Plan</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">€32K</div>
+      <div class="stat-label">Per Year</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">3km</div>
+      <div class="stat-label">To Liseberg</div>
+    </div>
+  </div>
+  <div class="cta-buttons">
+    <button class="btn-cta btn-cta-primary" onclick="openModal()">Contact Me Today</button>
+    <button class="btn-cta btn-cta-outline" onclick="openModal()">Request a Private Tour</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">Villa Gothenburg</span>
+  <span>Gothenburg, Sweden &nbsp;·&nbsp; Luxury Real Estate</span>
+  <span>© 2026</span>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <h3>Schedule a Viewing</h3>
+    <p>Fill in your details and we'll get back to you within 24 hours to confirm your visit.</p>
+    <input type="text" placeholder="Your full name" />
+    <input type="email" placeholder="Email address" />
+    <input type="tel" placeholder="Phone number" />
+    <select>
+      <option value="" disabled selected>Preferred date</option>
+      <option>Within this week</option>
+      <option>Next week</option>
+      <option>This month</option>
+      <option>Flexible</option>
+    </select>
+    <button class="btn-primary" style="width:100%; padding:14px; margin-top:8px;" onclick="submitForm()">Send Request</button>
+  </div>
+</div>
+
+<!-- MODAL2 -->
+<div class="modal-overlay" id="modal2Overlay" onclick="closeModal2Outside(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal2()">×</button>
+    <h3>The Rides</h3>
+    <div class="media">
+      <img src="https://images.trvl-media.com/place/6080153/1573807f-ac79-42cf-8190-226a34150e5e.jpg", width="400rem" />
+    </div>
+  </div>
+</div>
+
+<!-- MODAL3 -->
+<div class="modal-overlay" id="modal3Overlay" onclick="closeModal3Outside(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal3()">×</button>
+    <h3>Christmas Market</h3>
+    <div class="media">
+      <img src="https://www.liseberg.se/optimized/720p/ea171486/globalassets/jul-pa-liseberg/2023/vintermarknad/vintermarknad_1920x1080_web_jpl2023.jpg", width="400rem" />
+    </div>
+  </div>
+</div>
+
+<!-- MODAL4 -->
+<div class="modal-overlay" id="modal4Overlay" onclick="closeModal4Outside(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal4()">×</button>
+    <h3>The Gardens</h3>
+    <div class="media">
+      <img src="https://cms.goteborg.com/uploads/2020/10/Lisebergs_tradgardsdagar_-43.jpg", width="400rem" />
+    </div>
+  </div>
+</div>
+
+<script>
+  // Modal
+  function openModal() {
+    document.getElementById('modalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('modalOverlay')) closeModal();
+  }
+  function submitForm() {
+    closeModal();
+    alert('Thank you! We will contact you shortly to confirm your viewing.');
+  }
+  //Modal2
+  function openModal2() {
+    document.getElementById('modal2Overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal2() {
+    document.getElementById('modal2Overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeModal2Outside(e) {
+    if (e.target === document.getElementById('modal2Overlay')) closeModal2();
+  }
+  //Modal3
+  function openModal3() {
+    document.getElementById('modal3Overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal3() {
+    document.getElementById('modal3Overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeModal3Outside(e) {
+    if (e.target === document.getElementById('modal3Overlay')) closeModal2();
+  }
+  //Modal4
+  function openModal4() {
+    document.getElementById('modal4Overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal4() {
+    document.getElementById('modal4Overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeModal4Outside(e) {
+    if (e.target === document.getElementById('modal4Overlay')) closeModal4();
+  }
+
+
+
+  // Fade-in on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
