@@ -1,0 +1,263 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:5;padding:0;}
+
+:root{
+  --bg:#ffffff;--bg2:#f7f7f5;--bg3:#efefeb;
+  --txt:#1a1a1a;--txt2:#555550;--txt3:#99998f;
+  --brd:#e0dfda;--brd2:#c8c7c0;
+  --inp-bg:#ffffff;
+  --teal-bg:#e1f5ee;--teal-txt:#085041;--teal-brd:#9fe1cb;
+  --metric-bg:#ffffff;
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#1c1c1e;--bg2:#2c2c2e;--bg3:#3a3a3c;
+    --txt:#f2f2f7;--txt2:#aeaeb2;--txt3:#636366;
+    --brd:#3a3a3c;--brd2:#48484a;
+    --inp-bg:#2c2c2e;
+    --teal-bg:#0a2e24;--teal-txt:#5dcaa5;--teal-brd:#0f6e56;
+    --metric-bg:#2c2c2e;
+  }
+}
+
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--txt);font-size:13px;line-height:1.5;}
+.app{border:1px solid var(--brd);border-radius:14px;overflow:hidden;background:var(--bg);}
+.left{padding:24px;border-right:1px solid var(--brd);}
+.right{padding:24px;background:var(--bg2);}
+.brand{display:flex;align-items:center;gap:10px;margin-bottom:26px;}
+.brand-icon{width:34px;height:34px;border-radius:8px;background:var(--teal-bg);color:var(--teal-txt);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;border:1px solid var(--teal-brd);}
+.brand-name{font-size:14px;font-weight:500;color:var(--txt);}
+.brand-sub{font-size:11px;color:var(--txt3);}
+.group{margin-bottom:20px;}
+.group-title{font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--txt3);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.group-title::after{content:'';flex:1;height:1px;background:var(--brd);}
+.field{margin-bottom:10px;}
+.field-lbl{font-size:12px;color:var(--txt2);margin-bottom:4px;display:flex;align-items:center;gap:4px;}
+.inp{width:100%;height:34px;border:1px solid var(--brd2);border-radius:7px;background:var(--inp-bg);color:var(--txt);font-size:13px;padding:0 10px;outline:none;font-family:inherit;transition:border-color .15s;}
+.inp:focus{border-color:var(--teal-txt);}
+.inp::placeholder{color:var(--txt3);}
+.inp-row{display:flex;gap:7px;align-items:center;}
+.inp-row .inp{flex:1;}
+.inp-sfx{font-size:12px;color:var(--txt3);white-space:nowrap;}
+.maps-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;height:34px;border-radius:7px;background:var(--teal-bg);color:var(--teal-txt);border:1px solid var(--teal-brd);font-size:12px;font-weight:500;text-decoration:none;margin-top:4px;transition:background .15s;font-family:inherit;}
+.maps-btn:hover{opacity:.8;}
+.pill{display:none;align-items:center;gap:4px;background:var(--teal-bg);color:var(--teal-txt);border:1px solid var(--teal-brd);border-radius:20px;padding:2px 9px;font-size:11px;font-weight:500;margin-top:5px;width:fit-content;}
+.err{font-size:11px;color:#e24b4a;margin-top:3px;min-height:13px;}
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:320px;color:var(--txt3);text-align:center;gap:10px;}
+.empty i{font-size:30px;opacity:.35;}
+.empty p{font-size:13px;color:var(--txt3);line-height:1.6;}
+.rcontent{display:none;}
+.big-lbl{font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--txt3);margin-bottom:6px;display:flex;align-items:center;gap:5px;}
+.big-val{font-size:42px;font-weight:500;color:var(--txt);line-height:1;margin-bottom:10px;}
+.big-unit{font-size:20px;font-weight:400;color:var(--txt2);}
+.ph-track{height:6px;border-radius:3px;background:linear-gradient(to right,#e24b4a,#ef9f27 30%,#639922 55%,#1d9e75 75%,#378add);position:relative;margin-bottom:4px;}
+.ph-needle{position:absolute;top:-5px;width:2px;height:16px;background:var(--txt);border-radius:1px;transform:translateX(-50%);transition:left .4s;}
+.ph-scale{display:flex;justify-content:space-between;font-size:10px;color:var(--txt3);margin-bottom:8px;}
+.ph-badge{display:inline-flex;align-items:center;font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;}
+.div{height:1px;background:var(--brd);margin:18px 0;}
+.metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;}
+.metric{background:var(--metric-bg);border:1px solid var(--brd);border-radius:9px;padding:11px 13px;}
+.m-lbl{font-size:10px;color:var(--txt3);margin-bottom:4px;display:flex;align-items:center;gap:3px;}
+.m-val{font-size:17px;font-weight:500;color:var(--txt);}
+.m-unit{font-size:11px;font-weight:400;color:var(--txt2);}
+.tog-btn{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--txt2);background:none;border:none;cursor:pointer;padding:0;font-family:inherit;}
+.tog-btn:hover{color:var(--txt);}
+.steps-wrap{margin-top:9px;background:var(--metric-bg);border:1px solid var(--brd);border-radius:9px;overflow:hidden;}
+.srow{display:flex;align-items:baseline;gap:8px;padding:6px 12px;border-bottom:1px solid var(--brd);}
+.srow:last-child{border-bottom:none;}
+.sn{font-size:10px;color:var(--txt3);min-width:12px;}
+.st{font-size:11px;color:var(--txt2);flex:1;line-height:1.4;}
+.sv{font-size:11px;font-weight:500;color:var(--txt);text-align:right;white-space:nowrap;}
+.st-sub{font-size:10px;color:var(--txt3);}
+</style>
+
+<div class="app">
+  <div class="left">
+    <div class="brand">
+      <div class="brand-icon"><i class="ti ti-cloud-rain" aria-hidden="true"></i></div>
+      <div>
+        <div class="brand-name">Calculator ploaie acidă</div>
+        <div class="brand-sub">NO₂ rutier · 0.25 g/km</div>
+      </div>
+    </div>
+
+
+      <div class="group-title"><i class="ti ti-route" aria-hidden="true" style="font-size:11px;"></i>Rută</div>
+      <div class="field">
+        <div class="field-lbl"><i class="ti ti-map-pin" aria-hidden="true" style="font-size:11px;"></i>Plecare</div>
+        <input class="inp" type="text" id="plecare" placeholder="ex: București" oninput="upd()">
+      </div>
+      <div class="field">
+        <div class="field-lbl"><i class="ti ti-flag" aria-hidden="true" style="font-size:11px;"></i>Destinație</div>
+        <input class="inp" type="text" id="dest" placeholder="ex: Cluj-Napoca" oninput="upd()">
+      </div>
+      <a id="mlink" class="maps-btn" href="https://www.google.com/maps" target="_blank" rel="noopener">
+        <i class="ti ti-map-2" aria-hidden="true" style="font-size:14px;"></i>
+        Deschide în Google Maps ↗
+      </a>
+      </div>
+
+      <div>
+      <div class="group-title"><i class="ti ti-sliders" aria-hidden="true" style="font-size:11px;"></i>Parametri</div>
+      <div class="field">
+        <div class="field-lbl">Distanță rutieră</div>
+        <div class="inp-row">
+          <input class="inp" type="number" id="km" min="0.001" step="any" placeholder="km din Maps" oninput="calc()">
+          <span class="inp-sfx">km</span>
+
+        <div class="pill" id="pill"><i class="ti ti-smoke" aria-hidden="true" style="font-size:11px;"></i><span id="pillTxt"></span></div>
+        <div class="err" id="ekm"></div>
+      </div>
+      <div class="field">
+        <div class="field-lbl">Volum apă de ploaie</div>
+        <div class="inp-row">
+          <input class="inp" type="number" id="litri" min="1" step="any" value="100000" oninput="calc()">
+          <span class="inp-sfx">L</span>
+        </div>
+              <a id="mlink" class="maps-btn" href="https://www.meteoradar.ro/vremea/" target="_blank">
+        <i class="ti ti-map-2" aria-hidden="true" style="font-size:14px;"></i>
+        Deschide Meteoradar pentru detalii ↗
+      </a>
+        <div class="err" id="el"></div>
+      </div>
+
+  <div class="right">
+    <div class="empty" id="empty">
+      <i class="ti ti-flask" aria-hidden="true"></i>
+      <p>Introdu distanța<br>pentru a vedea rezultatele</p>
+    </div>
+
+    <div class="rcontent" id="rc">
+      <div class="big-lbl"><i class="ti ti-flask" aria-hidden="true" style="font-size:11px;"></i>pH ploaie acidă</div>
+      <div class="big-val" id="phv">—</div>
+      <div class="ph-track"><div class="ph-needle" id="phn" style="left:50%;"></div></div>
+      <div class="ph-scale"><span>0 acid</span><span>7 neutru</span><span>14 bază</span></div>
+      <span class="ph-badge" id="phtag"></span>
+
+      <div class="div"></div>
+
+      <div class="metrics">
+        <div class="metric">
+          <div class="m-lbl"><i class="ti ti-droplet" aria-hidden="true" style="font-size:11px;"></i>HNO₃ format</div>
+          <div class="m-val" id="av">—</div>
+        </div>
+        <div class="metric">
+          <div class="m-lbl"><i class="ti ti-atom" aria-hidden="true" style="font-size:11px;"></i>Moli HNO₃</div>
+          <div class="m-val" id="mv">—</div>
+        </div>
+        <div class="metric">
+          <div class="m-lbl"><i class="ti ti-test-pipe" aria-hidden="true" style="font-size:11px;"></i>[H⁺] total</div>
+          <div class="m-val" id="hv">—</div>
+        </div>
+        <div class="metric">
+          <div class="m-lbl"><i class="ti ti-car" aria-hidden="true" style="font-size:11px;"></i>NO₂ emis</div>
+          <div class="m-val" id="nv">—</div>
+        </div>
+      </div>
+
+      <button class="tog-btn" id="togBtn" onclick="togSteps()">
+        <i class="ti ti-chevron-right" id="togIcon" style="font-size:12px;"></i>
+        Pași de calcul
+      </button>
+      <div id="spanel" class="steps-wrap" style="display:none;"><div id="steps"></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+var open=false;
+function upd(){
+  var p=document.getElementById('plecare').value.trim();
+  var d=document.getElementById('dest').value.trim();
+  document.getElementById('mlink').href=p&&d
+    ?'https://www.google.com/maps/dir/'+encodeURIComponent(p)+'/'+encodeURIComponent(d)
+    :p?'https://www.google.com/maps/search/'+encodeURIComponent(p)
+    :'https://www.google.com/maps';
+}
+function togSteps(){
+  open=!open;
+  document.getElementById('spanel').style.display=open?'block':'none';
+  document.getElementById('togBtn').innerHTML='<i class="ti ti-chevron-'+(open?'down':'right')+'" style="font-size:12px;"></i> '+(open?'Ascunde':'Arată')+' pași de calcul';
+}
+function phInfo(ph){
+  if(ph<3)   return['Extrem de acid','#e24b4a','#4a1515'];
+  if(ph<4.5) return['Foarte acid',   '#ef9f27','#3d2800'];
+  if(ph<5.6) return['Ploaie acidă',  '#ef9f27','#3d2800'];
+  return          ['pH normal',      '#1d9e75','#0a2e24'];
+}
+function phInfoLight(ph){
+  if(ph<3)   return['Extrem de acid','#a32d2d','#fcebeb'];
+  if(ph<4.5) return['Foarte acid',   '#ba7517','#faeeda'];
+  if(ph<5.6) return['Ploaie acidă',  '#854f0b','#faeeda'];
+  return          ['pH normal',      '#3b6d11','#eaf3de'];
+}
+var isDark=window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches;
+function getPhInfo(ph){return isDark?phInfo(ph):phInfoLight(ph);}
+if(window.matchMedia){
+  window.matchMedia('(prefers-color-scheme:dark)').addEventListener('change',function(e){
+    isDark=e.matches;
+    calc();
+  });
+}
+function fmt(n,d){return n.toLocaleString('ro-RO',{maximumFractionDigits:d===undefined?2:d});}
+function calc(){
+  var km=parseFloat(document.getElementById('km').value);
+  var L=parseFloat(document.getElementById('litri').value);
+  var pill=document.getElementById('pill');
+  document.getElementById('ekm').textContent='';
+  document.getElementById('el').textContent='';
+  var hasKm=document.getElementById('km').value!=='';
+  if(!hasKm||isNaN(km)||km<=0){
+    pill.style.display='none';
+    document.getElementById('empty').style.display='flex';
+    document.getElementById('rc').style.display='none';
+    if(hasKm) document.getElementById('ekm').textContent='Valoare invalidă.';
+    return;
+  }
+  if(isNaN(L)||L<=0){document.getElementById('el').textContent='Valoare invalidă.';return;}
+
+  var gno2=km*0.25;
+  pill.style.display='flex';
+  document.getElementById('pillTxt').textContent=fmt(gno2,2)+' g NO₂ emis';
+
+  var mno2=gno2/46,mreac=mno2*0.5,mhno3=mreac*2/3;
+  var gacid=mhno3*63,cpol=mhno3/L,ctot=cpol+2.5e-6;
+  var ph=Math.max(0,Math.min(-Math.log10(ctot),5.6));
+
+  document.getElementById('empty').style.display='none';
+  document.getElementById('rc').style.display='block';
+  document.getElementById('phv').textContent=ph.toFixed(2);
+  document.getElementById('phn').style.left=(ph/14*100).toFixed(1)+'%';
+
+  var info=getPhInfo(ph);
+  var tag=document.getElementById('phtag');
+  tag.textContent=info[0];tag.style.color=info[1];tag.style.background=info[2];
+
+  document.getElementById('av').innerHTML=gacid>=1000
+    ?fmt(gacid/1000,3)+' <span class="m-unit">kg</span>'
+    :fmt(gacid,3)+' <span class="m-unit">g</span>';
+  document.getElementById('mv').innerHTML=mhno3.toExponential(2)+' <span class="m-unit">mol</span>';
+  document.getElementById('hv').innerHTML=ctot.toExponential(2)+' <span class="m-unit">M</span>';
+  document.getElementById('nv').innerHTML=gno2>=1000
+    ?fmt(gno2/1000,2)+' <span class="m-unit">kg</span>'
+    :fmt(gno2,2)+' <span class="m-unit">g</span>';
+
+  var stxt=document.getElementById('txt3color');
+  document.getElementById('steps').innerHTML=[
+    [1,'Emisii NO₂',km+' km × 0.25',fmt(gno2,3)+' g'],
+    [2,'Moli NO₂',fmt(gno2,3)+' ÷ 46',mno2.toFixed(5)+' mol'],
+    [3,'Reacționați (50%)','',mreac.toFixed(5)+' mol'],
+    [4,'Moli HNO₃ (×2/3)','',mhno3.toFixed(5)+' mol'],
+    [5,'Masă HNO₃','×63 g/mol',fmt(gacid,3)+' g'],
+    [6,'[H⁺] poluare','÷ '+fmt(L,0)+' L',cpol.toExponential(3)+' M'],
+    [7,'[H⁺] total','+ 2.5×10⁻⁶',ctot.toExponential(3)+' M'],
+    [8,'pH final','−log₁₀',ph.toFixed(2)],
+  ].map(function(r){
+    return '<div class="srow"><span class="sn">'+r[0]+'</span><span class="st">'+r[1]+
+      (r[2]?'<br><span class="st-sub">'+r[2]+'</span>':'')+
+      '</span><span class="sv">'+r[3]+'</span></div>';
+  }).join('');
+}
+</script>
