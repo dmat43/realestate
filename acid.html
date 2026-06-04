@@ -1,173 +1,354 @@
-
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Calculator Ploaie Acidă</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.0.0/tabler-icons.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
-*{box-sizing:border-box;margin:5;padding:0;}
-
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 :root{
-  --bg:#ffffff;--bg2:#f7f7f5;--bg3:#efefeb;
-  --txt:#1a1a1a;--txt2:#555550;--txt3:#99998f;
-  --brd:#e0dfda;--brd2:#c8c7c0;
-  --inp-bg:#ffffff;
-  --teal-bg:#e1f5ee;--teal-txt:#085041;--teal-brd:#9fe1cb;
-  --metric-bg:#ffffff;
+  --bg:#f2f4f3;--card:#ffffff;--card2:#f8faf9;
+  --txt:#111a16;--txt2:#4a5e54;--txt3:#8fa89e;
+  --brd:#dde8e3;--brd2:#c4d6cf;
+  --teal:#095c47;--teal-lt:#e2f5ee;--teal-md:#9fd9c5;
+  --red:#d94040;--inp-bg:#f4f8f6;
+  --shadow:0 1px 3px rgba(0,0,0,.06),0 4px 12px rgba(0,0,0,.04);
 }
-@media(prefers-color-scheme:dark){
-  :root{
-    --bg:#1c1c1e;--bg2:#2c2c2e;--bg3:#3a3a3c;
-    --txt:#f2f2f7;--txt2:#aeaeb2;--txt3:#636366;
-    --brd:#3a3a3c;--brd2:#48484a;
-    --inp-bg:#2c2c2e;
-    --teal-bg:#0a2e24;--teal-txt:#5dcaa5;--teal-brd:#0f6e56;
-    --metric-bg:#2c2c2e;
-  }
-}
+@media(prefers-color-scheme:dark){:root{
+  --bg:#0e1612;--card:#1a2620;--card2:#1f2e28;
+  --txt:#e8f2ee;--txt2:#8fbaa8;--txt3:#4d7060;
+  --brd:#233329;--brd2:#2e4438;
+  --teal:#2dd4a0;--teal-lt:#0d2b1f;--teal-md:#1a5e45;
+  --inp-bg:#151f1a;
+  --shadow:0 1px 3px rgba(0,0,0,.3),0 4px 12px rgba(0,0,0,.2);
+}}
+html,body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--txt);font-size:15px;line-height:1.5;min-height:100vh;padding-bottom:100px;}
 
-body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--txt);font-size:13px;line-height:1.5;}
-.app{border:1px solid var(--brd);border-radius:14px;overflow:hidden;background:var(--bg);}
-.left{padding:24px;border-right:1px solid var(--brd);}
-.right{padding:24px;background:var(--bg2);}
-.brand{display:flex;align-items:center;gap:10px;margin-bottom:26px;}
-.brand-icon{width:34px;height:34px;border-radius:8px;background:var(--teal-bg);color:var(--teal-txt);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;border:1px solid var(--teal-brd);}
-.brand-name{font-size:14px;font-weight:500;color:var(--txt);}
-.brand-sub{font-size:11px;color:var(--txt3);}
-.group{margin-bottom:20px;}
-.group-title{font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--txt3);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
-.group-title::after{content:'';flex:1;height:1px;background:var(--brd);}
-.field{margin-bottom:10px;}
-.field-lbl{font-size:12px;color:var(--txt2);margin-bottom:4px;display:flex;align-items:center;gap:4px;}
-.inp{width:100%;height:34px;border:1px solid var(--brd2);border-radius:7px;background:var(--inp-bg);color:var(--txt);font-size:13px;padding:0 10px;outline:none;font-family:inherit;transition:border-color .15s;}
-.inp:focus{border-color:var(--teal-txt);}
+/* ── HEADER ── */
+.header{background:var(--teal);padding:14px 18px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.18);}
+.h-icon{width:38px;height:38px;border-radius:11px;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;border:1.5px solid rgba(255,255,255,.3);}
+.h-icon svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.h-title{font-size:15px;font-weight:600;color:#fff;}
+.h-sub{font-size:11px;color:rgba(255,255,255,.65);}
+
+/* ── TABS ── */
+.tabs{display:flex;gap:8px;background:var(--card2);border-bottom:1px solid var(--brd);padding:10px 14px;}
+.tab{flex:1;height:38px;border-radius:10px;border:1.5px solid var(--brd2);background:transparent;color:var(--txt2);font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .15s;}
+.tab.active{background:var(--teal-lt);color:var(--teal);border-color:var(--teal-md);}
+.tab:active{opacity:.7;}
+
+/* ── PAGE ── */
+.page{padding:14px;max-width:520px;margin:0 auto;display:flex;flex-direction:column;gap:12px;}
+
+/* ── CARDS ── */
+.card{background:var(--card);border:1px solid var(--brd);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);}
+.card-head{padding:11px 16px;border-bottom:1px solid var(--brd);font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--txt3);display:flex;align-items:center;gap:6px;background:var(--card2);}
+.card-body{padding:14px 16px;}
+
+/* ── FIELDS ── */
+.field{margin-bottom:12px;}
+.field:last-child{margin-bottom:0;}
+.lbl{font-size:13px;font-weight:500;color:var(--txt2);margin-bottom:5px;display:flex;align-items:center;gap:5px;}
+.lbl-note{font-size:11px;font-weight:400;color:var(--txt3);}
+.inp{width:100%;height:46px;border:1.5px solid var(--brd2);border-radius:11px;background:var(--inp-bg);color:var(--txt);font-size:15px;padding:0 14px;outline:none;font-family:'DM Sans',sans-serif;transition:border-color .15s,box-shadow .15s;-webkit-appearance:none;appearance:none;}
+.inp:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,171,128,.15);}
 .inp::placeholder{color:var(--txt3);}
-.inp-row{display:flex;gap:7px;align-items:center;}
+select.inp{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238fa89e' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px;}
+.inp-row{display:flex;gap:8px;align-items:center;}
 .inp-row .inp{flex:1;}
-.inp-sfx{font-size:12px;color:var(--txt3);white-space:nowrap;}
-.maps-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;height:34px;border-radius:7px;background:var(--teal-bg);color:var(--teal-txt);border:1px solid var(--teal-brd);font-size:12px;font-weight:500;text-decoration:none;margin-top:4px;transition:background .15s;font-family:inherit;}
-.maps-btn:hover{opacity:.8;}
-.pill{display:none;align-items:center;gap:4px;background:var(--teal-bg);color:var(--teal-txt);border:1px solid var(--teal-brd);border-radius:20px;padding:2px 9px;font-size:11px;font-weight:500;margin-top:5px;width:fit-content;}
-.err{font-size:11px;color:#e24b4a;margin-top:3px;min-height:13px;}
-.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:320px;color:var(--txt3);text-align:center;gap:10px;}
-.empty i{font-size:30px;opacity:.35;}
-.empty p{font-size:13px;color:var(--txt3);line-height:1.6;}
-.rcontent{display:none;}
-.big-lbl{font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--txt3);margin-bottom:6px;display:flex;align-items:center;gap:5px;}
-.big-val{font-size:42px;font-weight:500;color:var(--txt);line-height:1;margin-bottom:10px;}
-.big-unit{font-size:20px;font-weight:400;color:var(--txt2);}
-.ph-track{height:6px;border-radius:3px;background:linear-gradient(to right,#e24b4a,#ef9f27 30%,#639922 55%,#1d9e75 75%,#378add);position:relative;margin-bottom:4px;}
-.ph-needle{position:absolute;top:-5px;width:2px;height:16px;background:var(--txt);border-radius:1px;transform:translateX(-50%);transition:left .4s;}
-.ph-scale{display:flex;justify-content:space-between;font-size:10px;color:var(--txt3);margin-bottom:8px;}
-.ph-badge{display:inline-flex;align-items:center;font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;}
-.div{height:1px;background:var(--brd);margin:18px 0;}
-.metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;}
-.metric{background:var(--metric-bg);border:1px solid var(--brd);border-radius:9px;padding:11px 13px;}
-.m-lbl{font-size:10px;color:var(--txt3);margin-bottom:4px;display:flex;align-items:center;gap:3px;}
-.m-val{font-size:17px;font-weight:500;color:var(--txt);}
-.m-unit{font-size:11px;font-weight:400;color:var(--txt2);}
-.tog-btn{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--txt2);background:none;border:none;cursor:pointer;padding:0;font-family:inherit;}
-.tog-btn:hover{color:var(--txt);}
-.steps-wrap{margin-top:9px;background:var(--metric-bg);border:1px solid var(--brd);border-radius:9px;overflow:hidden;}
-.srow{display:flex;align-items:baseline;gap:8px;padding:6px 12px;border-bottom:1px solid var(--brd);}
+.inp-unit{height:46px;min-width:42px;display:flex;align-items:center;justify-content:center;background:var(--inp-bg);border:1.5px solid var(--brd2);border-radius:11px;font-size:13px;font-weight:500;color:var(--txt3);padding:0 10px;white-space:nowrap;}
+.err{font-size:12px;color:var(--red);margin-top:5px;}
+.sky-hint{margin-top:8px;padding:9px 12px;border-radius:10px;font-size:12px;line-height:1.5;font-weight:500;transition:background .2s,color .2s;}
+.pill{display:none;align-items:center;gap:5px;background:var(--teal-lt);color:var(--teal);border:1px solid var(--teal-md);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:500;margin-top:6px;width:fit-content;}
+.link-btn{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;height:44px;border-radius:11px;background:var(--teal-lt);color:var(--teal);border:1.5px solid var(--teal-md);font-size:13px;font-weight:600;text-decoration:none;margin-top:10px;font-family:'DM Sans',sans-serif;transition:opacity .15s;}
+.link-btn:active{opacity:.7;}
+
+/* ── MULTI-ZI DAYS ── */
+.days-list{display:flex;flex-direction:column;gap:10px;}
+
+/* Day card: expanded with sky select per day */
+.day-card{background:var(--card2);border:1.5px solid var(--brd2);border-radius:13px;overflow:hidden;}
+.day-card-head{display:flex;align-items:center;gap:8px;padding:9px 12px;border-bottom:1px solid var(--brd);}
+.day-num{font-size:12px;font-weight:700;color:var(--teal);background:var(--teal-lt);border:1px solid var(--teal-md);border-radius:6px;padding:2px 8px;white-space:nowrap;}
+.day-card-body{padding:10px 12px;display:flex;flex-direction:column;gap:8px;}
+.day-km-wrap{display:flex;align-items:center;gap:6px;}
+.day-km-wrap .inp{height:40px;font-size:14px;flex:1;}
+.day-unit{font-size:12px;color:var(--txt3);white-space:nowrap;}
+.day-sky-wrap{display:flex;flex-direction:column;gap:4px;}
+.day-sky-lbl{font-size:11px;font-weight:500;color:var(--txt3);display:flex;align-items:center;gap:4px;}
+.day-sky-wrap select.inp{height:38px;font-size:13px;}
+.day-sky-hint{padding:6px 10px;border-radius:8px;font-size:11px;font-weight:500;line-height:1.4;}
+.day-remove{margin-left:auto;width:32px;height:32px;border-radius:8px;border:1.5px solid var(--brd2);background:transparent;color:var(--txt3);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all .15s;}
+.day-remove:active{background:var(--red);border-color:var(--red);color:#fff;}
+
+.add-day-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;height:42px;border-radius:11px;border:1.5px dashed var(--brd2);background:transparent;color:var(--txt3);font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;margin-top:4px;}
+.add-day-btn:active{border-color:var(--teal);color:var(--teal);}
+.add-day-btn:disabled{opacity:.4;cursor:not-allowed;}
+.total-km-row{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--teal-lt);border-radius:11px;margin-top:8px;border:1px solid var(--teal-md);}
+.total-km-lbl{font-size:12px;font-weight:600;color:var(--teal);}
+.total-km-val{font-size:14px;font-weight:600;color:var(--teal);font-family:'DM Mono',monospace;}
+
+/* ── RESULTS ── */
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:38px 20px;color:var(--txt3);text-align:center;gap:10px;}
+.empty .e-icon{font-size:34px;opacity:.3;}
+.empty p{font-size:14px;line-height:1.6;}
+.ph-block{padding:18px 16px 14px;}
+.ph-label{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--txt3);margin-bottom:4px;}
+.ph-value{font-size:54px;font-weight:600;color:var(--txt);line-height:1;font-family:'DM Mono',monospace;margin-bottom:13px;}
+.ph-track{height:8px;border-radius:4px;background:linear-gradient(to right,#e24b4a,#ef9f27 30%,#8db32a 55%,#1d9e75 75%,#378add);position:relative;margin-bottom:5px;}
+.ph-needle{position:absolute;top:-6px;width:3px;height:20px;background:var(--txt);border-radius:2px;transform:translateX(-50%);transition:left .4s cubic-bezier(.34,1.56,.64,1);}
+.ph-scale{display:flex;justify-content:space-between;font-size:10px;color:var(--txt3);margin-bottom:12px;}
+.ph-badge{display:inline-flex;align-items:center;font-size:13px;font-weight:600;padding:5px 14px;border-radius:20px;}
+.divider{height:1px;background:var(--brd);margin:0 16px;}
+.metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px 16px;}
+.metric{background:var(--card2);border:1px solid var(--brd);border-radius:12px;padding:13px 14px;}
+.m-lbl{font-size:11px;color:var(--txt3);margin-bottom:5px;display:flex;align-items:center;gap:4px;font-weight:500;}
+.m-val{font-size:19px;font-weight:600;color:var(--txt);font-family:'DM Mono',monospace;line-height:1.2;}
+.m-unit{font-size:12px;font-weight:400;color:var(--txt2);font-family:'DM Sans',sans-serif;}
+
+/* ── PAȘI DE CALCUL: text mai mic ── */
+.steps-toggle{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-top:1px solid var(--brd);font-size:12px;font-weight:500;color:var(--txt2);background:none;border-left:none;border-right:none;border-bottom:none;width:100%;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.steps-toggle:active{color:var(--teal);}
+.steps-body{border-top:1px solid var(--brd);}
+.srow{display:flex;align-items:baseline;gap:8px;padding:7px 14px;border-bottom:1px solid var(--brd);}
 .srow:last-child{border-bottom:none;}
-.sn{font-size:10px;color:var(--txt3);min-width:12px;}
-.st{font-size:11px;color:var(--txt2);flex:1;line-height:1.4;}
-.sv{font-size:11px;font-weight:500;color:var(--txt);text-align:right;white-space:nowrap;}
-.st-sub{font-size:10px;color:var(--txt3);}
+.sn{font-size:10px;color:var(--txt3);min-width:12px;font-family:'DM Mono',monospace;}
+.st{font-size:10px;color:var(--txt2);flex:1;line-height:1.4;}
+.sv{font-size:10px;font-weight:600;color:var(--txt);text-align:right;white-space:nowrap;font-family:'DM Mono',monospace;}
+.st-sub{font-size:9px;color:var(--txt3);}
+
+/* ── MULTI SUMMARY BANNER ── */
+.multi-banner{margin:0 16px 14px;padding:10px 14px;background:var(--card2);border:1px solid var(--brd);border-radius:11px;font-size:12px;color:var(--txt2);line-height:1.7;}
+.multi-banner strong{color:var(--txt);font-weight:600;}
+
+/* ── AVERTISMENT EMISII MARI: banner sticky jos ── */
+.warn-banner{
+  position:fixed;bottom:0;left:0;right:0;z-index:20;
+  display:none;
+  padding:14px 18px 18px;
+  background:linear-gradient(135deg,#f5fdf9 0%,#eaf9f1 100%);
+  border-top:2px solid #b8e8d0;
+  box-shadow:0 -4px 20px rgba(0,100,60,.07);
+  animation:slideUp .3s ease;
+}
+@media(prefers-color-scheme:dark){.warn-banner{background:linear-gradient(135deg,#0d2e20 0%,#0a2518 100%);border-top-color:#1a6e48;}}
+@keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
+.warn-inner{max-width:520px;margin:0 auto;display:flex;align-items:flex-start;gap:12px;}
+.warn-icon{font-size:22px;flex-shrink:0;margin-top:1px;}
+.warn-text{flex:1;}
+.warn-title{font-size:13px;font-weight:700;color:#0a6040;margin-bottom:2px;}
+@media(prefers-color-scheme:dark){.warn-title{color:#3dd4a0;}}
+.warn-body{font-size:12px;color:#2a7854;line-height:1.5;}
+@media(prefers-color-scheme:dark){.warn-body{color:#6fbda0;}}
+.warn-close{background:none;border:none;font-size:16px;color:#4a9e78;cursor:pointer;padding:0;flex-shrink:0;opacity:.7;margin-top:1px;}
+.warn-close:active{opacity:1;}
 </style>
+</head>
+<body>
 
-<div class="app">
-  <div class="left">
-    <div class="brand">
-      <div class="brand-icon"><i class="ti ti-cloud-rain" aria-hidden="true"></i></div>
-      <div>
-        <div class="brand-name">Calculator ploaie acidă</div>
-        <div class="brand-sub">NO₂ rutier · 0.25 g/km</div>
-      </div>
-    </div>
+<!-- HEADER cu icon SVG nor+precipitații alb -->
+<div class="header">
+  <div class="h-icon">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20 17.58A5 5 0 0 0 18 8h-1.26A8 8 0 1 0 4 16.25"/>
+      <line x1="8" y1="19" x2="8" y2="21"/>
+      <line x1="8" y1="13" x2="8" y2="15"/>
+      <line x1="12" y1="19" x2="12" y2="21"/>
+      <line x1="12" y1="13" x2="12" y2="15"/>
+      <line x1="16" y1="19" x2="16" y2="21"/>
+      <line x1="16" y1="13" x2="16" y2="15"/>
+    </svg>
+  </div>
+  <div>
+    <div class="h-title">Ploaie Acidă</div>
+    <div class="h-sub">Calculator NO₂ rutier · 0.25 g/km</div>
+  </div>
+</div>
 
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab active" id="tab-single" onclick="switchMode('single')">
+    <i class="ti ti-route" style="font-size:14px;"></i> O singură zi
+  </button>
+  <button class="tab" id="tab-multi" onclick="switchMode('multi')">
+    <i class="ti ti-calendar-week" style="font-size:14px;"></i> Mai multe zile
+  </button>
+</div>
 
-      <div class="group-title"><i class="ti ti-route" aria-hidden="true" style="font-size:11px;"></i>Rută</div>
+<div class="page">
+
+  <!-- CARD RUTĂ -->
+  <div class="card">
+    <div class="card-head"><i class="ti ti-route" style="font-size:13px;"></i>Rută</div>
+    <div class="card-body">
       <div class="field">
-        <div class="field-lbl"><i class="ti ti-map-pin" aria-hidden="true" style="font-size:11px;"></i>Plecare</div>
+        <div class="lbl"><i class="ti ti-map-pin" style="font-size:13px;"></i>Plecare</div>
         <input class="inp" type="text" id="plecare" placeholder="ex: București" oninput="upd()">
       </div>
       <div class="field">
-        <div class="field-lbl"><i class="ti ti-flag" aria-hidden="true" style="font-size:11px;"></i>Destinație</div>
+        <div class="lbl"><i class="ti ti-flag" style="font-size:13px;"></i>Destinație</div>
         <input class="inp" type="text" id="dest" placeholder="ex: Cluj-Napoca" oninput="upd()">
       </div>
-      <a id="mlink" class="maps-btn" href="https://www.google.com/maps" target="_blank" rel="noopener">
-        <i class="ti ti-map-2" aria-hidden="true" style="font-size:14px;"></i>
-        Deschide în Google Maps ↗
+      <a id="mlink" class="link-btn" href="https://www.google.com/maps" target="_blank" rel="noopener">
+        <i class="ti ti-map-2" style="font-size:16px;"></i>Deschide în Google Maps ↗
       </a>
-      </div>
+    </div>
+  </div>
 
-      <div>
-      <div class="group-title"><i class="ti ti-sliders" aria-hidden="true" style="font-size:11px;"></i>Parametri</div>
+  <!-- CARD PARAMETRI: O SINGURĂ ZI -->
+  <div class="card" id="card-single">
+    <div class="card-head"><i class="ti ti-sliders" style="font-size:13px;"></i>Parametri</div>
+    <div class="card-body">
       <div class="field">
-        <div class="field-lbl">Distanță rutieră</div>
+        <div class="lbl">Distanță rutieră</div>
         <div class="inp-row">
-          <input class="inp" type="number" id="km" min="0.001" step="any" placeholder="km din Maps" oninput="calc()">
-          <span class="inp-sfx">km</span>
-
-        <div class="pill" id="pill"><i class="ti ti-smoke" aria-hidden="true" style="font-size:11px;"></i><span id="pillTxt"></span></div>
+          <input class="inp" type="number" id="km" min="0.001" step="any" inputmode="decimal" placeholder="km din Maps" oninput="calc()">
+          <span class="inp-unit">km</span>
+        </div>
+        <div class="pill" id="pill"><i class="ti ti-smoke" style="font-size:12px;"></i><span id="pillTxt"></span></div>
         <div class="err" id="ekm"></div>
       </div>
       <div class="field">
-        <div class="field-lbl">Volum apă de ploaie</div>
-        <div class="inp-row">
-          <input class="inp" type="number" id="litri" min="1" step="any" value="100000" oninput="calc()">
-          <span class="inp-sfx">L</span>
-        </div>
-              <a id="mlink" class="maps-btn" href="https://www.meteoradar.ro/vremea/" target="_blank">
-        <i class="ti ti-map-2" aria-hidden="true" style="font-size:14px;"></i>
-        Deschide Meteoradar pentru detalii ↗
-      </a>
-        <div class="err" id="el"></div>
+        <div class="lbl"><i class="ti ti-cloud" style="font-size:13px;"></i>Stare cer</div>
+        <select class="inp" id="cer" onchange="updateSky()">
+          <option value="senin">☀️ Senin</option>
+          <option value="noros">⛅ Noros</option>
+          <option value="ploios" selected>🌧️ Ploios</option>
+          <option value="furtunos">⛈️ Furtunos</option>
+        </select>
+        <div id="skyHint" class="sky-hint"></div>
       </div>
+      <div class="field">
+        <div class="lbl"><i class="ti ti-droplet" style="font-size:13px;"></i>Volum apă <span class="lbl-note">(estimat, editabil)</span></div>
+        <div class="inp-row">
+          <input class="inp" type="number" id="litri" min="1" step="any" inputmode="decimal" value="200000" oninput="calc()">
+          <span class="inp-unit">L</span>
+        </div>
+        <div class="err" id="el"></div>
+        <a class="link-btn" href="https://www.meteoradar.ro/vremea/" target="_blank" rel="noopener">
+          <i class="ti ti-radar" style="font-size:16px;"></i>Meteoradar ↗
+        </a>
+      </div>
+    </div>
+  </div>
 
-  <div class="right">
+  <!-- CARD PARAMETRI: MULTI-ZI -->
+  <div class="card" id="card-multi" style="display:none;">
+    <div class="card-head"><i class="ti ti-calendar-week" style="font-size:13px;"></i>Trasee pe zile</div>
+    <div class="card-body">
+      <div class="days-list" id="daysList"></div>
+      <button class="add-day-btn" id="addDayBtn" onclick="addDay()">
+        <i class="ti ti-plus" style="font-size:14px;"></i> Adaugă zi
+      </button>
+      <div class="total-km-row" id="totalKmRow" style="display:none;">
+        <span class="total-km-lbl"><i class="ti ti-sigma" style="font-size:13px;vertical-align:-2px;"></i> Total km</span>
+        <span class="total-km-val" id="totalKmVal">0 km</span>
+      </div>
+    </div>
+    <!-- Informatie volum apa calculat automat din vreme -->
+    <div style="padding:0 16px 14px;border-top:1px solid var(--brd);margin-top:2px;">
+      <div style="height:10px;"></div>
+      <div style="display:flex;align-items:center;gap:7px;padding:9px 12px;background:var(--teal-lt);border:1px solid var(--teal-md);border-radius:10px;font-size:12px;color:var(--teal);font-weight:500;">
+        <i class="ti ti-droplet" style="font-size:13px;"></i>
+        Volumul de apă se calculează automat din prognoza de cer a fiecărei zile.
+      </div>
+      <div class="err" id="elM"></div>
+      <a class="link-btn" href="https://www.meteoradar.ro/vremea/" target="_blank" rel="noopener" style="margin-top:10px;">
+        <i class="ti ti-radar" style="font-size:16px;"></i>Meteoradar ↗
+      </a>
+    </div>
+  </div>
+
+  <!-- CARD REZULTATE -->
+  <div class="card" id="resultCard">
     <div class="empty" id="empty">
-      <i class="ti ti-flask" aria-hidden="true"></i>
+      <div class="e-icon"><i class="ti ti-flask"></i></div>
       <p>Introdu distanța<br>pentru a vedea rezultatele</p>
     </div>
-
-    <div class="rcontent" id="rc">
-      <div class="big-lbl"><i class="ti ti-flask" aria-hidden="true" style="font-size:11px;"></i>pH ploaie acidă</div>
-      <div class="big-val" id="phv">—</div>
-      <div class="ph-track"><div class="ph-needle" id="phn" style="left:50%;"></div></div>
-      <div class="ph-scale"><span>0 acid</span><span>7 neutru</span><span>14 bază</span></div>
-      <span class="ph-badge" id="phtag"></span>
-
-      <div class="div"></div>
-
+    <div id="rc" style="display:none;">
+      <div class="ph-block">
+        <div class="ph-label"><i class="ti ti-flask" style="font-size:11px;"></i> pH ploaie acidă</div>
+        <div class="ph-value" id="phv">—</div>
+        <div class="ph-track"><div class="ph-needle" id="phn" style="left:50%;"></div></div>
+        <div class="ph-scale"><span>0 acid</span><span>7 neutru</span><span>14 bază</span></div>
+        <span class="ph-badge" id="phtag"></span>
+      </div>
+      <div class="multi-banner" id="multiBanner" style="display:none;"></div>
+      <div class="divider"></div>
       <div class="metrics">
         <div class="metric">
-          <div class="m-lbl"><i class="ti ti-droplet" aria-hidden="true" style="font-size:11px;"></i>HNO₃ format</div>
+          <div class="m-lbl"><i class="ti ti-droplet" style="font-size:11px;"></i>HNO₃ format</div>
           <div class="m-val" id="av">—</div>
         </div>
         <div class="metric">
-          <div class="m-lbl"><i class="ti ti-atom" aria-hidden="true" style="font-size:11px;"></i>Moli HNO₃</div>
-          <div class="m-val" id="mv">—</div>
-        </div>
-        <div class="metric">
-          <div class="m-lbl"><i class="ti ti-test-pipe" aria-hidden="true" style="font-size:11px;"></i>[H⁺] total</div>
-          <div class="m-val" id="hv">—</div>
-        </div>
-        <div class="metric">
-          <div class="m-lbl"><i class="ti ti-car" aria-hidden="true" style="font-size:11px;"></i>NO₂ emis</div>
+          <div class="m-lbl"><i class="ti ti-car" style="font-size:11px;"></i>NO₂ emis total</div>
           <div class="m-val" id="nv">—</div>
         </div>
       </div>
-
-      <button class="tog-btn" id="togBtn" onclick="togSteps()">
-        <i class="ti ti-chevron-right" id="togIcon" style="font-size:12px;"></i>
-        Pași de calcul
+      <button class="steps-toggle" id="togBtn" onclick="togSteps()">
+        <span>Pași de calcul</span>
+        <i class="ti ti-chevron-down" id="togIcon" style="font-size:15px;transition:transform .2s;"></i>
       </button>
-      <div id="spanel" class="steps-wrap" style="display:none;"><div id="steps"></div></div>
+      <div id="spanel" class="steps-body" style="display:none;">
+        <div id="steps"></div>
+      </div>
     </div>
+  </div>
+
+</div><!-- /page -->
+
+<!-- BANNER AVERTISMENT EMISII MARI (sticky jos) -->
+<div class="warn-banner" id="warnBanner">
+  <div class="warn-inner">
+    <span class="warn-icon">🌿</span>
+    <div class="warn-text">
+      <div class="warn-title">Emisii ridicate de NO₂</div>
+      <div class="warn-body" id="warnBody">Traseul tău generează emisii semnificative. Ia în considerare transportul în comun, mersul cu bicicleta sau carpooling-ul.</div>
+    </div>
+    <button class="warn-close" onclick="document.getElementById('warnBanner').style.display='none'">✕</button>
   </div>
 </div>
 
 <script>
-var open=false;
+/* ═══ STATE ═══ */
+var mode = 'single';
+var stepsOpen = false;
+var warnDismissed = false;
+// days: array of {km, sky} — each day has its own sky condition
+var days = [{ km: '', sky: 'ploios' }];
+
+/* ═══ SKY PRESETS ═══ */
+var skyPresets = {
+  senin:    {litri:5000,   bgL:'#fdf6e3',txtL:'#7a5c00',bgD:'#2b2200',txtD:'#d4aa40', hint:'☀️ Cer senin — ~5 000 L apă reziduală.'},
+  noros:    {litri:50000,  bgL:'#eaf0f8',txtL:'#2d4f80',bgD:'#0d1e33',txtD:'#6fa3d4', hint:'⛅ Cer noros — ~50 000 L / condens.'},
+  ploios:   {litri:200000, bgL:'#daeef9',txtL:'#15567a',bgD:'#08192a',txtD:'#4da8d4', hint:'🌧️ Ploaie moderată — ~200 000 L.'},
+  furtunos: {litri:600000, bgL:'#ede4f5',txtL:'#4d2280',bgD:'#1a0a2e',txtD:'#b47de0', hint:'⛈️ Furtună intensă — ~600 000 L.'}
+};
+var isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme:dark)').matches;
+if(window.matchMedia) window.matchMedia('(prefers-color-scheme:dark)').addEventListener('change',function(e){
+  isDark=e.matches; updateSky(); renderDays(); if(mode==='single')calc();else calcMulti();
+});
+
+function skyBg(key){var p=skyPresets[key];return isDark?p.bgD:p.bgL;}
+function skyTxt(key){var p=skyPresets[key];return isDark?p.txtD:p.txtL;}
+
+function applySkyHint(el, key){
+  var p=skyPresets[key];
+  el.textContent=p.hint;
+  el.style.background=isDark?p.bgD:p.bgL;
+  el.style.color=isDark?p.txtD:p.txtL;
+}
+function updateSky(){
+  var k=document.getElementById('cer').value;
+  document.getElementById('litri').value=skyPresets[k].litri;
+  applySkyHint(document.getElementById('skyHint'),k);
+  calc();
+}
+
+/* ═══ ROUTE LINK ═══ */
 function upd(){
   var p=document.getElementById('plecare').value.trim();
   var d=document.getElementById('dest').value.trim();
@@ -176,33 +357,173 @@ function upd(){
     :p?'https://www.google.com/maps/search/'+encodeURIComponent(p)
     :'https://www.google.com/maps';
 }
-function togSteps(){
-  open=!open;
-  document.getElementById('spanel').style.display=open?'block':'none';
-  document.getElementById('togBtn').innerHTML='<i class="ti ti-chevron-'+(open?'down':'right')+'" style="font-size:12px;"></i> '+(open?'Ascunde':'Arată')+' pași de calcul';
+
+/* ═══ MODE SWITCH ═══ */
+function switchMode(m){
+  mode=m;
+  document.getElementById('tab-single').classList.toggle('active',m==='single');
+  document.getElementById('tab-multi').classList.toggle('active',m==='multi');
+  document.getElementById('card-single').style.display=m==='single'?'':'none';
+  document.getElementById('card-multi').style.display=m==='multi'?'':'none';
+  warnDismissed=false;
+  if(m==='single') calc(); else calcMulti();
 }
-function phInfo(ph){
-  if(ph<3)   return['Extrem de acid','#e24b4a','#4a1515'];
-  if(ph<4.5) return['Foarte acid',   '#ef9f27','#3d2800'];
-  if(ph<5.6) return['Ploaie acidă',  '#ef9f27','#3d2800'];
-  return          ['pH normal',      '#1d9e75','#0a2e24'];
-}
-function phInfoLight(ph){
-  if(ph<3)   return['Extrem de acid','#a32d2d','#fcebeb'];
-  if(ph<4.5) return['Foarte acid',   '#ba7517','#faeeda'];
-  if(ph<5.6) return['Ploaie acidă',  '#854f0b','#faeeda'];
-  return          ['pH normal',      '#3b6d11','#eaf3de'];
-}
-var isDark=window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches;
-function getPhInfo(ph){return isDark?phInfo(ph):phInfoLight(ph);}
-if(window.matchMedia){
-  window.matchMedia('(prefers-color-scheme:dark)').addEventListener('change',function(e){
-    isDark=e.matches;
-    calc();
+
+/* ═══ MULTI-ZI: RENDER DAYS ═══ */
+function renderDays(){
+  var list=document.getElementById('daysList');
+  list.innerHTML='';
+  days.forEach(function(d,i){
+    var card=document.createElement('div');
+    card.className='day-card';
+
+    // Sky options HTML
+    var skyOpts=['senin','noros','ploios','furtunos'];
+    var skyLabels={'senin':'☀️ Senin','noros':'⛅ Noros','ploios':'🌧️ Ploios','furtunos':'⛈️ Furtunos'};
+    var optsHtml=skyOpts.map(function(k){
+      return '<option value="'+k+'"'+(d.sky===k?' selected':'')+'>'+skyLabels[k]+'</option>';
+    }).join('');
+
+    var removeBtn=days.length>1
+      ?'<button class="day-remove" onclick="removeDay('+i+')" title="Șterge ziua"><i class="ti ti-x" style="font-size:14px;"></i></button>'
+      :'';
+
+    card.innerHTML=
+      '<div class="day-card-head">'+
+        '<span class="day-num">Ziua '+(i+1)+'</span>'+
+        removeBtn+
+      '</div>'+
+      '<div class="day-card-body">'+
+        '<div class="day-km-wrap">'+
+          '<input class="inp" type="number" min="0.001" step="any" inputmode="decimal" placeholder="km" value="'+(d.km||'')+'" oninput="setDayKm('+i+',this.value)">'+
+          '<span class="day-unit">km</span>'+
+        '</div>'+
+        '<div class="day-sky-wrap">'+
+          '<div class="day-sky-lbl"><i class="ti ti-cloud" style="font-size:11px;"></i>Prognoză cer</div>'+
+          '<select class="inp" onchange="setDaySky('+i+',this.value)">'+optsHtml+'</select>'+
+          '<div class="day-sky-hint" id="dsh-'+i+'" style="background:'+skyBg(d.sky)+';color:'+skyTxt(d.sky)+'">'+skyPresets[d.sky].hint+'</div>'+
+        '</div>'+
+      '</div>';
+    list.appendChild(card);
   });
+
+  var total=days.reduce(function(s,d){return s+(parseFloat(d.km)||0);},0);
+  document.getElementById('addDayBtn').disabled=days.length>=7;
+  if(total>0){
+    document.getElementById('totalKmRow').style.display='flex';
+    document.getElementById('totalKmVal').textContent=fmt(total,2)+' km';
+  } else {
+    document.getElementById('totalKmRow').style.display='none';
+  }
+  calcMulti();
 }
+
+function setDayKm(i,v){days[i].km=v;renderDays();}
+function setDaySky(i,v){
+  days[i].sky=v;
+  // update just the hint, no full re-render to preserve focus
+  var hint=document.getElementById('dsh-'+i);
+  if(hint){hint.textContent=skyPresets[v].hint;hint.style.background=skyBg(v);hint.style.color=skyTxt(v);}
+  calcMulti();
+}
+function addDay(){if(days.length<7){days.push({km:'',sky:'ploios'});renderDays();}}
+function removeDay(i){if(days.length>1){days.splice(i,1);renderDays();}}
+
+/* ═══ CHEMISTRY ═══ */
+function chemistry(km, L){
+  var gno2=km*0.25;
+  var mno2=gno2/46, mreac=mno2*0.5, mhno3=mreac*2/3;
+  var gacid=mhno3*63, cpol=mhno3/L, ctot=cpol+2.5e-6;
+  var ph=Math.max(0,Math.min(-Math.log10(ctot),5.6));
+  return {gno2,mno2,mreac,mhno3,gacid,cpol,ctot,ph};
+}
+
+/* ═══ PH LABEL ═══ */
+function phLabel(ph){
+  if(isDark){
+    if(ph<3)   return['Extrem de acid','#e85555','#3a0a0a'];
+    if(ph<4.5) return['Foarte acid','#e8a030','#2e1a00'];
+    if(ph<5.6) return['Ploaie acidă','#c8841a','#2e1a00'];
+    return           ['pH normal','#2dd4a0','#052e1c'];
+  } else {
+    if(ph<3)   return['Extrem de acid','#b02020','#fce8e8'];
+    if(ph<4.5) return['Foarte acid','#b06010','#faeada'];
+    if(ph<5.6) return['Ploaie acidă','#905010','#faeada'];
+    return           ['pH normal','#1a7a3a','#e4f5ea'];
+  }
+}
+
 function fmt(n,d){return n.toLocaleString('ro-RO',{maximumFractionDigits:d===undefined?2:d});}
+function fmtMass(g){return g>=1000?fmt(g/1000,3)+' <span class="m-unit">kg</span>':fmt(g,3)+' <span class="m-unit">g</span>';}
+
+/* ═══ WARN BANNER ═══ */
+function checkWarn(gno2){
+  var banner=document.getElementById('warnBanner');
+  if(gno2>1500 && !warnDismissed){
+    document.getElementById('warnBody').textContent=
+      'Emisii de '+fmt(gno2/1000,2)+' kg NO₂ depășesc pragul recomandat. Consideră transportul în comun, mersul cu bicicleta sau carpooling-ul pentru a reduce impactul.';
+    banner.style.display='block';
+  } else if(gno2<=1500){
+    banner.style.display='none';
+    warnDismissed=false;
+  }
+}
+
+/* ═══ SHOW RESULTS ═══ */
+function showResults(r, km, L, multiInfo){
+  document.getElementById('empty').style.display='none';
+  document.getElementById('rc').style.display='block';
+  document.getElementById('phv').textContent=r.ph.toFixed(2);
+  document.getElementById('phn').style.left=(r.ph/14*100).toFixed(1)+'%';
+  var info=phLabel(r.ph);
+  var tag=document.getElementById('phtag');
+  tag.textContent=info[0];tag.style.color=info[1];tag.style.background=info[2];
+  document.getElementById('av').innerHTML=fmtMass(r.gacid);
+  document.getElementById('nv').innerHTML=fmtMass(r.gno2);
+
+  var banner=document.getElementById('multiBanner');
+  if(multiInfo){
+    banner.style.display='block';
+    var totalLDisplay=multiInfo.totalL?(' · <strong>'+fmt(multiInfo.totalL/1000,0)+' k L</strong> apă total'):'';
+    banner.innerHTML='<strong>'+multiInfo.days+' zile</strong> · <strong>'+fmt(multiInfo.totalKm,2)+' km</strong> total'+totalLDisplay+' · pH calculat pe zile';
+  } else {
+    banner.style.display='none';
+  }
+
+  document.getElementById('steps').innerHTML=[
+    [1,'Emisii NO₂ total', fmt(km,2)+' km × 0.25', fmt(r.gno2,3)+' g'],
+    [2,'Moli NO₂',         fmt(r.gno2,3)+' ÷ 46',  r.mno2.toFixed(5)+' mol'],
+    [3,'Reacționați (50%)','',                        r.mreac.toFixed(5)+' mol'],
+    [4,'Moli HNO₃ (×2/3)','',                        r.mhno3.toFixed(5)+' mol'],
+    [5,'Masă HNO₃',        '×63 g/mol',              fmt(r.gacid,3)+' g'],
+    [6,'[H⁺] poluare',    '÷ '+fmt(L,0)+' L',       r.cpol.toExponential(3)+' M'],
+    [7,'[H⁺] total',       '+ 2.5×10⁻⁶',            r.ctot.toExponential(3)+' M'],
+    [8,'pH final',          '−log₁₀',                 r.ph.toFixed(2)],
+  ].map(function(row){
+    return '<div class="srow"><span class="sn">'+row[0]+'</span><span class="st">'+row[1]+
+      (row[2]?'<br><span class="st-sub">'+row[2]+'</span>':'')+
+      '</span><span class="sv">'+row[3]+'</span></div>';
+  }).join('');
+
+  checkWarn(r.gno2);
+}
+
+function hideResults(){
+  document.getElementById('empty').style.display='flex';
+  document.getElementById('rc').style.display='none';
+  document.getElementById('warnBanner').style.display='none';
+}
+
+/* ═══ STEPS TOGGLE ═══ */
+function togSteps(){
+  stepsOpen=!stepsOpen;
+  document.getElementById('spanel').style.display=stepsOpen?'block':'none';
+  document.getElementById('togIcon').style.transform=stepsOpen?'rotate(180deg)':'';
+}
+
+/* ═══ SINGLE CALC ═══ */
 function calc(){
+  if(mode!=='single') return;
   var km=parseFloat(document.getElementById('km').value);
   var L=parseFloat(document.getElementById('litri').value);
   var pill=document.getElementById('pill');
@@ -210,54 +531,44 @@ function calc(){
   document.getElementById('el').textContent='';
   var hasKm=document.getElementById('km').value!=='';
   if(!hasKm||isNaN(km)||km<=0){
-    pill.style.display='none';
-    document.getElementById('empty').style.display='flex';
-    document.getElementById('rc').style.display='none';
+    pill.style.display='none'; hideResults();
     if(hasKm) document.getElementById('ekm').textContent='Valoare invalidă.';
     return;
   }
   if(isNaN(L)||L<=0){document.getElementById('el').textContent='Valoare invalidă.';return;}
-
-  var gno2=km*0.25;
   pill.style.display='flex';
-  document.getElementById('pillTxt').textContent=fmt(gno2,2)+' g NO₂ emis';
-
-  var mno2=gno2/46,mreac=mno2*0.5,mhno3=mreac*2/3;
-  var gacid=mhno3*63,cpol=mhno3/L,ctot=cpol+2.5e-6;
-  var ph=Math.max(0,Math.min(-Math.log10(ctot),5.6));
-
-  document.getElementById('empty').style.display='none';
-  document.getElementById('rc').style.display='block';
-  document.getElementById('phv').textContent=ph.toFixed(2);
-  document.getElementById('phn').style.left=(ph/14*100).toFixed(1)+'%';
-
-  var info=getPhInfo(ph);
-  var tag=document.getElementById('phtag');
-  tag.textContent=info[0];tag.style.color=info[1];tag.style.background=info[2];
-
-  document.getElementById('av').innerHTML=gacid>=1000
-    ?fmt(gacid/1000,3)+' <span class="m-unit">kg</span>'
-    :fmt(gacid,3)+' <span class="m-unit">g</span>';
-  document.getElementById('mv').innerHTML=mhno3.toExponential(2)+' <span class="m-unit">mol</span>';
-  document.getElementById('hv').innerHTML=ctot.toExponential(2)+' <span class="m-unit">M</span>';
-  document.getElementById('nv').innerHTML=gno2>=1000
-    ?fmt(gno2/1000,2)+' <span class="m-unit">kg</span>'
-    :fmt(gno2,2)+' <span class="m-unit">g</span>';
-
-  var stxt=document.getElementById('txt3color');
-  document.getElementById('steps').innerHTML=[
-    [1,'Emisii NO₂',km+' km × 0.25',fmt(gno2,3)+' g'],
-    [2,'Moli NO₂',fmt(gno2,3)+' ÷ 46',mno2.toFixed(5)+' mol'],
-    [3,'Reacționați (50%)','',mreac.toFixed(5)+' mol'],
-    [4,'Moli HNO₃ (×2/3)','',mhno3.toFixed(5)+' mol'],
-    [5,'Masă HNO₃','×63 g/mol',fmt(gacid,3)+' g'],
-    [6,'[H⁺] poluare','÷ '+fmt(L,0)+' L',cpol.toExponential(3)+' M'],
-    [7,'[H⁺] total','+ 2.5×10⁻⁶',ctot.toExponential(3)+' M'],
-    [8,'pH final','−log₁₀',ph.toFixed(2)],
-  ].map(function(r){
-    return '<div class="srow"><span class="sn">'+r[0]+'</span><span class="st">'+r[1]+
-      (r[2]?'<br><span class="st-sub">'+r[2]+'</span>':'')+
-      '</span><span class="sv">'+r[3]+'</span></div>';
-  }).join('');
+  document.getElementById('pillTxt').textContent=fmt(km*0.25,2)+' g NO₂ emis';
+  showResults(chemistry(km,L), km, L, null);
 }
+
+/* ═══ MULTI CALC ═══ */
+function calcMulti(){
+  if(mode!=='multi') return;
+  document.getElementById('elM').textContent='';
+  var validDays=days.filter(function(d){return parseFloat(d.km)>0;});
+  if(validDays.length===0){hideResults();return;}
+  // Fiecare zi contribuie cu litrele sale de vreme
+  var totalKm=0, totalHno3=0, totalGno2=0;
+  validDays.forEach(function(d){
+    var km=parseFloat(d.km);
+    var L=skyPresets[d.sky].litri;
+    var r=chemistry(km,L);
+    totalKm+=km;
+    totalHno3+=r.mhno3;
+    totalGno2+=r.gno2;
+  });
+  // pH combinat: [H+] = moli HNO3 totali / volum total apa
+  var totalL=validDays.reduce(function(s,d){return s+skyPresets[d.sky].litri;},0);
+  var ctot=(totalHno3/totalL)+2.5e-6;
+  var ph=Math.max(0,Math.min(-Math.log10(ctot),5.6));
+  var r2={gno2:totalGno2,mno2:totalGno2/46,mreac:totalGno2/46*0.5,mhno3:totalHno3,
+           gacid:totalHno3*63,cpol:totalHno3/totalL,ctot:ctot,ph:ph};
+  showResults(r2, totalKm, totalL, {days:validDays.length, totalKm:totalKm, totalL:totalL});
+}
+
+/* ═══ INIT ═══ */
+updateSky();
+renderDays();
 </script>
+</body>
+</html>
